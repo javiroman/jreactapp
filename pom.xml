@@ -22,6 +22,7 @@
     <module>jreactapp-api</module>
     <module>jreactapp-ui</module>
     <module>jreactapp-resources</module>
+    <module>jreactapp-assembly</module>
   </modules>
 
   <dependencies>
@@ -35,9 +36,13 @@
 
   <build>
   <!-- Configures plugins that are actually referenced within the
-       plugins element in the childrens POMs or in the current POM -->
+       plugins element in the children's POMs or in the current POM -->
     <pluginManagement>
       <plugins>
+
+        <!--
+          Check Style Maven Plugin Definition
+         -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -62,6 +67,10 @@
             </execution>
           </executions>
         </plugin>
+
+        <!--
+          Maven Assembly Plugin Definition
+        -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -73,6 +82,9 @@
     </pluginManagement>
 
     <plugins>
+      <!--
+          Check Style Maven Plugin Configuration
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>

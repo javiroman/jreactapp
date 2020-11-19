@@ -1,0 +1,71 @@
+<assembly>
+    <id>bin</id>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <baseDirectory>jreactapp-${project.version}</baseDirectory>
+
+    <dependencySets>
+        <!-- Write out all dependency artifacts to lib directory -->
+        <dependencySet>
+            <scope>runtime</scope>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <directoryMode>0770</directoryMode>
+            <fileMode>0664</fileMode>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <excludes>
+                <exclude>jreactapp-bootstrap</exclude>
+                <exclude>jreactapp-resources</exclude>
+            </excludes>
+        </dependencySet>
+        <!-- Write out the bootstrap lib component to its own dir -->
+        <dependencySet>
+            <scope>runtime</scope>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib/bootstrap</outputDirectory>
+            <directoryMode>0770</directoryMode>
+            <fileMode>0664</fileMode>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <includes>
+                <include>jreactapp-bootstrap</include>
+            </includes>
+        </dependencySet>
+        <!-- Write out the conf directory contents -->
+        <dependencySet>
+            <scope>runtime</scope>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>./</outputDirectory>
+            <directoryMode>0770</directoryMode>
+            <fileMode>0664</fileMode>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <includes>
+                <include>jreactapp-resources</include>
+            </includes>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <filtered>true</filtered>
+                <includes>
+                    <include>conf/*</include>
+                </includes>
+            </unpackOptions>
+        </dependencySet>
+        <!-- Write out the bin directory contents -->
+        <dependencySet>
+            <scope>runtime</scope>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>./</outputDirectory>
+            <directoryMode>0770</directoryMode>
+            <fileMode>0770</fileMode>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <includes>
+                <include>jreactapp-resources</include>
+            </includes>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <filtered>true</filtered>
+                <includes>
+                    <include>bin/*</include>
+                </includes>
+            </unpackOptions>
+        </dependencySet>
+    </dependencySets>
+</assembly>
