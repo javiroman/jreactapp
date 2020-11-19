@@ -14,7 +14,21 @@
     <packaging>jar</packaging>
     <description>This is the Application Entry Point</description>
 
+    <properties>
+        <jetty.version>9.3.9.v20160517</jetty.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jreactapp</groupId>
             <artifactId>jreactapp-api</artifactId>
