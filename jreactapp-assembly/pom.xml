@@ -68,6 +68,14 @@
             <scope>runtime</scope>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.jreactapp</groupId>
+            <artifactId>jreactapp-ui</artifactId>
+            <classifier>ui</classifier>
+            <version>1.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+            <type>zip</type>
+        </dependency>
     </dependencies>
 
 </project>

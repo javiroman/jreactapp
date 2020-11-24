@@ -1,17 +1,14 @@
 package org.jreactapp.bootstrap;
 
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.util.resource.PathResource;
+import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.jreactapp.api.Api;
+
+import java.net.MalformedURLException;
 import java.util.logging.Logger;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.DefaultHandler;
 
 /**
  * Application entry point
@@ -19,34 +16,28 @@ import org.eclipse.jetty.server.handler.DefaultHandler;
 public class RunJreactApp {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private static Server createServer(final int port, final String contextPath){
+    private static Server createServer(final int port, final String contextPath)
+            throws MalformedURLException {
+        System.setProperty("org.eclipse.jetty.LEVEL","INFO");
+
         Server server = new Server(port);
 
-        // Create the ResourceHandler. It is the object that will actually handle
-        // the request for a given file. It is a Jetty Handler object so it is
-        // suitable for chaining with other handlers.
-        ResourceHandler resourceHandler = new ResourceHandler();
+        String pwdPath = System.getProperty("user.dir");
 
-        // Configure the ResourceHandler. Setting the resource base indicates
-        // where the files should be served out of.
-        resourceHandler.setDirectoriesListed(true);
-        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
+        ServletContextHandler context = new ServletContextHandler();
+        context.setContextPath("/");
 
-        Path userDir = Paths.get(System.getProperty("user.dir"));
-        PathResource pathResource = new PathResource(userDir);
-        resourceHandler.setBaseResource(pathResource);
+        ServletHolder staticHolder = new ServletHolder(new DefaultServlet());
+        staticHolder.setInitParameter("resourceBase", "./lib/ui");
+        staticHolder.setInitParameter("pathInfoOnly", "true");
+        context.addServlet(staticHolder, "/*");
 
-        // Add the ResourceHandler to the server.
-        HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
-        server.setHandler(handlers);
+        server.setHandler(context);
 
         return server;
     }
 
     public static void main( String[] args ) throws Exception {
-
-
         Api app = new Api();
         app.greeting();
 
