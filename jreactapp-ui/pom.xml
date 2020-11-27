@@ -51,23 +51,6 @@
                             </resources>
                         </configuration>
                     </execution>
-
-                    <!--execution>
-                        <id>position-react-build</id>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <phase>prepare-package</phase>
-                        <configuration>
-                            <outputDirectory>target/ui</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${frontend.dependency.configs}/build</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution-->
                 </executions>
             </plugin>
             <plugin>

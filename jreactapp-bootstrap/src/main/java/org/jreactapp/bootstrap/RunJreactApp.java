@@ -1,8 +1,11 @@
 package org.jreactapp.bootstrap;
 
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.server.ServerProperties;
 import org.jreactapp.api.Api;
 
 import java.net.MalformedURLException;
@@ -18,21 +21,30 @@ public class RunJreactApp {
 
     private static Server createServer(final int port, final String contextPath)
             throws MalformedURLException {
-        System.setProperty("org.eclipse.jetty.LEVEL","INFO");
 
+        System.setProperty("org.eclipse.jetty.LEVEL","DEBUG");
         Server server = new Server(port);
-
         String pwdPath = System.getProperty("user.dir");
 
-        ServletContextHandler context = new ServletContextHandler();
-        context.setContextPath("/");
+        ServletContextHandler staticContext = new ServletContextHandler();
+        staticContext.setContextPath("/");
 
         ServletHolder staticHolder = new ServletHolder(new DefaultServlet());
         staticHolder.setInitParameter("resourceBase", "./lib/ui");
         staticHolder.setInitParameter("pathInfoOnly", "true");
-        context.addServlet(staticHolder, "/*");
+        staticContext.addServlet(staticHolder, "/*");
 
-        server.setHandler(context);
+        ServletContextHandler restContext = new ServletContextHandler();
+        ServletHolder restHolder = new ServletHolder();
+        restHolder.setInitParameter(ServerProperties.PROVIDER_PACKAGES, "org.jreactapp.api");
+        restContext.addServlet(org.glassfish.jersey.servlet.ServletContainer.class,
+                        "/api/*");
+        //restHolder.setInitOrder(0);
+
+        HandlerCollection handlerCollection = new HandlerCollection();
+        handlerCollection.setHandlers(new Handler[] {restContext, staticContext});
+
+        server.setHandler(handlerCollection);
 
         return server;
     }
